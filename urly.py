@@ -43,7 +43,7 @@ class Urly(db.Model):
         return msg
 
     def to_text(self):
-        return "http://ur.ly/%s" % self.code()
+        return "http://leepa.co/%s" % self.code()
 
     def save_in_cache(self):
         """We don't really care if this fails"""
