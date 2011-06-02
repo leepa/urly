@@ -9,6 +9,7 @@
 
 import os
 from google.appengine.ext.webapp import template
+from google.appengine.api import users
 
 class MainView():
     """Helper method for our one-and-only template. All display goes through here"""
@@ -20,8 +21,13 @@ class MainView():
             handler.response.out.write(body)
 
         def render_main(handler, values=None):
-            path = os.path.join(os.path.dirname(__file__), 'main.html')
-            handler.response.out.write(template.render(path, values))
+            user = users.get_current_user()
+            if user and user.email() == "lpackham@gmail.com":
+                path = os.path.join(os.path.dirname(__file__), 'main.html')
+                handler.response.out.write(template.render(path, values))
+            else:
+                handler.response.clear()
+                handler.redirect(users.create_login_url('/'))
 
         """ We never have an error if we have an urly to show """
         if (urly is not None):
